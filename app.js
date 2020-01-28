@@ -27,13 +27,11 @@ const serveHomePage = (req, res) => {
 };
 
 const findHandler = req => {
-  // if (req.method === 'GET' && req.url === './index.html')
-  // return serveHomePage;
   return serveStaticFile;
 };
-const processRequest = (req, res) => {
+const processRequest = (req, res, data) => {
   const handler = findHandler(req);
-  return handler(req, res);
+  return handler(req, res, data);
 };
 
 module.exports = processRequest;

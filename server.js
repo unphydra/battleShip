@@ -8,7 +8,7 @@ const handleConnection = function(req, res) {
   req.on('end', () => {
     console.log(data);
   });
-  processRequest(req, res);
+  processRequest(req, res, data);
 };
 
 const main = (port = 4000) => {

@@ -4,7 +4,7 @@ const main = () => {
 
 let shipsPositions = [];
 
-const demo = () => {
+const handleClick = () => {
   const cellId = event.target.id;
   shipsPositions.push(cellId);
   console.log(cellId);

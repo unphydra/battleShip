@@ -15,7 +15,7 @@ const createCell = function(board, col, row, allow) {
   }
   cell.className = 'cell';
   if (allow && row !== -1 && col !== -1) {
-    cell.addEventListener('click', demo);
+    cell.addEventListener('click', handleClick);
   }
   cell.id = getCellId(col, row);
   board.appendChild(cell);

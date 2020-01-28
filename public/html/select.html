@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <script src="../js/index.js"></script>
+    <script src="../js/mainSelect.js"></script>
+    <script src="../js/grid.js"></script>
+    <link rel="stylesheet" href="../css/homePage.css" />
+    <link rel="stylesheet" href="../css/select.css" />
+  </head>
+  <body onload="main()">
+    <div class="display">
+      <div class="container" id="board1"></div>
+      <div class="selection">
+        <div class="shipBar">
+          <img src="../images/PngItem_538930.png" alt="" />
+        </div>
+        <div class="shipBar">
+          <img src="../images/PngItem_538158.png" alt="" />
+        </div>
+        <div class="shipBar">
+          <img src="../images/battleship-silhouette-13.png" alt="" />
+        </div>
+        <div class="shipBar">
+          <img src="../images/battleship-silhouette-4.png" alt="" />
+        </div>
+        <div class="pickShip">
+          <div onclick="shipSelect()" class="ship" id="five">5</div>
+          <div onclick="shipSelect()" class="ship" id="four">4</div>
+          <div onclick="shipSelect()" class="ship" id="three">3</div>
+          <div onclick="shipSelect()" class="ship" id="two">2</div>
+        </div>
+        <button onclick="sendJson()" id="sendButton">Done</button>
+      </div>
+    </div>
+  </body>
+</html>
