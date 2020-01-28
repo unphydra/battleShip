@@ -1,0 +1,24 @@
+body {
+  height: 100vh;
+  width: 99vw;
+}
+.display {
+  width: 99vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;
+}
+
+.container {
+  width: 594px;
+  height: 594px;
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  width: 52px;
+  height: 52px;
+  border: 1px solid black;
+}
