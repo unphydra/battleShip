@@ -65,11 +65,6 @@ const getShipsPositions = function(req, res, data) {
   no_of_player++;
   const cookie = req.headers['set-cookie'];
   players[cookie].ships = JSON.parse(data);
-  // players.forEach(player => {
-  //   if (player.cookie == cookie) {
-  //     player.ships = JSON.parse(data);
-  //   }
-  // });
   res.end();
 };
 
@@ -77,11 +72,6 @@ const serveShips = function(req, res) {
   const cookie = req.headers['set-cookie'];
   const content = JSON.stringify(players[cookie].ships);
   res.end(content);
-  // players.forEach(player => {
-  //   if (player.cookie == cookie) {
-  //     res.end(JSON.stringify(player.ships));
-  //   }
-  // });
 };
 
 const findHandler = req => {
