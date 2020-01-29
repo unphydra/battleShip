@@ -6,7 +6,7 @@ const static_path = `${__dirname}/public`;
 let no_of_player = 0;
 let start = false;
 let game_started = false;
-let players = [];
+let players = {};
 
 const serveStaticFile = (req, res, data) => {
   const path = `${static_path}${req.url}`;
@@ -18,7 +18,7 @@ const serveStaticFile = (req, res, data) => {
   if (!req.headers['Cookie'] && req.url == '/html/select.html') {
     const cookie = `coco=${new Date().getTime()}`;
     res.setHeader('Set-Cookie', cookie);
-    players.push({ playerName, cookie });
+    players[cookie] = { playerName };
     console.log(players);
   }
   const [, extension] = path.match(/.*\.(.*)$/) || [];
@@ -64,21 +64,24 @@ const waitingHandler = function(req, res) {
 const getShipsPositions = function(req, res, data) {
   no_of_player++;
   const cookie = req.headers['set-cookie'];
-  players.forEach(player => {
-    if (player.cookie == cookie) {
-      player.ships = JSON.parse(data);
-    }
-  });
+  players[cookie].ships = JSON.parse(data);
+  // players.forEach(player => {
+  //   if (player.cookie == cookie) {
+  //     player.ships = JSON.parse(data);
+  //   }
+  // });
   res.end();
 };
 
 const serveShips = function(req, res) {
   const cookie = req.headers['set-cookie'];
-  players.forEach(player => {
-    if (player.cookie == cookie) {
-      res.end(JSON.stringify(player.ships));
-    }
-  });
+  const content = JSON.stringify(players[cookie].ships);
+  res.end(content);
+  // players.forEach(player => {
+  //   if (player.cookie == cookie) {
+  //     res.end(JSON.stringify(player.ships));
+  //   }
+  // });
 };
 
 const findHandler = req => {
