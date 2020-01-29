@@ -1,11 +1,9 @@
 body {
   height: 100vh;
   width: 99vw;
-  display: flex;
-  justify-content: space-between;
 }
 
-.display {
+#display {
   width: 100vw;
   height: 600px;
   display: flex;

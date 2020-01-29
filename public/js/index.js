@@ -1,11 +1,11 @@
 const sendHttpGET = (url, data) => {
   const req = new XMLHttpRequest();
   req.onload = () => {
-    document.location.href = 'http://localhost:4000/html/game.html';
+    document.location.href = 'http://10.132.21.176:4000/html/game.html';
   };
   req.open('POST', url);
-  console.log(data);
-
+  req.setRequestHeader('Set-Cookie', document.cookie);
+  req.setRequestHeader('Content-Type', 'application/json');
   req.send(data);
 };
 

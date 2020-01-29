@@ -7,8 +7,8 @@ const handleConnection = function(req, res) {
   req.on('data', chunk => (data += chunk));
   req.on('end', () => {
     console.log(data);
+    processRequest(req, res, data);
   });
-  processRequest(req, res, data);
 };
 
 const main = (port = 4000) => {
