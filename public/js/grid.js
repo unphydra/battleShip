@@ -5,33 +5,55 @@ const getCellId = function(col, row) {
   return `${col}_${row}`;
 };
 
-const createCell = function(board, col, row, allow) {
+const createCell = function(board,innerText,id) {
   const cell = document.createElement('div');
-  if (row === -1) {
-    cell.innerText = col + 1;
-  }
-  if (col === -1) {
-    cell.innerHTML = String.fromCharCode(65 + row);
+  if(innerText){
+    cell.innerText = innerText;
   }
   cell.className = 'cell';
-  if (allow && row !== -1 && col !== -1) {
-    cell.addEventListener('click', handleClick);
-  }
-  cell.id = getCellId(col, row);
+  cell.id = id
   board.appendChild(cell);
 };
 
-const createBoard = function(player, allow) {
-  for (let y = -1; y < row; y++) {
-    for (let x = -1; x < col; x++) {
-      createCell(player, x, y, allow);
+const createBoard = function(player) {
+  for (let y = 0; y < row; y++) {
+    for (let x = 0; x < col; x++) {
+      const id = getCellId(x,y)
+      createCell(player,false, id);
     }
   }
 };
 
+const createHeader = function(header) {
+  for(let x = 0;x<=col;x++){
+    createCell(header,x);
+  }
+};
+
+const createSide = function(side) {
+  for(let y = 0;y<row;y++){
+    const innerText = String.fromCharCode(65 + y);
+    createCell(side,innerText)
+  }
+};
+
+const createContainer = function(container) {
+  createBoard(container);
+  const header = container.parentElement.parentElement.children[0];
+  createHeader(header);
+  const side = container.parentElement.children[0];
+  createSide(side)
+
+};
+
 const displayGrid = function() {
   const board1 = document.getElementById('board1');
+  board1.addEventListener('click',handleClick)
   const board2 = document.getElementById('board2');
-  createBoard(board1, true);
-  board2 && createBoard(board2, false);
+  createContainer(board1)
+  board2 && createContainer(board2)
+
+
+  // board2 && board2.addEventListener('click',handleClick)
+  // board2 && createBoard(board2);
 };

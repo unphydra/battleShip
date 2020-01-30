@@ -3,12 +3,14 @@ const main = () => {
   requestGame();
 };
 
+const shipsPositions = [];
+
 const handleClick = () => {
   const cellId = event.target.id;
   shipsPositions.push(cellId);
   const cell = document.querySelector(`#board1 #\\3${cellId}`);
   cell.classList.add('red');
-  cell.removeEventListener('click', demo);
+  cell.removeEventListener('click', handleClick);
 };
 
 const sendHttpGET = (url, callback) => {
@@ -42,8 +44,8 @@ const requestGame = function() {
       waitingBar.style.display = 'none';
     }
   };
-  const interval = setInterval(
-    () => sendHttpGET('/wait', checkGameStat),
-    1000
-  );
+  // const interval = setInterval(
+  //   () => sendHttpGET('/wait', checkGameStat),
+  //   1000
+  // );
 };

@@ -14,6 +14,32 @@ body {
   width: 594px;
   height: 594px;
   border: 1px solid black;
+ 
+}
+
+.conHeader{
+  width: 594px;
+  height: 54px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.conFooter{
+  display: flex;
+  width: 594px;
+  height: 540px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.side{
+  width: 54px;
+  height: 540px;
+}
+
+.board{
+  width: 540px;
+  height: 540px;
   display: flex;
   flex-wrap: wrap;
 }
