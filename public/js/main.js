@@ -24,7 +24,7 @@ const sendHttpGET = (url, callback) => {
 const drawShips = function(positions) {
   positions.forEach(position => {
     const cell = document.querySelector(`#board2 #\\3${position}`);
-    cell.classList.add('red');
+    cell.classList.add('blue');
   });
 };
 

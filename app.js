@@ -50,8 +50,6 @@ const waitingHandler = function(req, res) {
   }
 
   if (no_of_player === 2) {
-    console.log('game started');
-
     game_started = true;
     content = 'start';
   }
