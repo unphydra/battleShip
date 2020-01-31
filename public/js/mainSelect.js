@@ -1,5 +1,6 @@
 const main = () => {
   displayGrid();
+  enableOnClick();
 };
 
 let ship_placed = true;
@@ -26,4 +27,9 @@ const shipSelect = () => {
     number = +box.innerText;
     box.classList.add('gray');
   }
+};
+
+const enableOnClick = function() {
+  const board = document.getElementById('board1');
+  board.addEventListener('click', handleClick);
 };

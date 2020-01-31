@@ -2,11 +2,10 @@ const http = require('http');
 const processRequest = require('./app.js');
 
 const handleConnection = function(req, res) {
-  console.log(req.url);
+  // console.log(req.url);
   let data = '';
   req.on('data', chunk => (data += chunk));
   req.on('end', () => {
-    console.log(data);
     processRequest(req, res, data);
   });
 };

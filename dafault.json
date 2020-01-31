@@ -1,0 +1,8 @@
+{
+  "no_of_player": 0,
+  "start": false,
+  "game_started": false,
+  "turn": false,
+  "update": {},
+  "players": {}
+}

@@ -1,12 +1,21 @@
 const fs = require('fs');
 const querystring = require('querystring');
 const contentType = require('./public/lib/content-types.json');
+const status = require('./status.json');
 
 const static_path = `${__dirname}/public`;
-let no_of_player = 0;
-let start = false;
-let game_started = false;
-let players = {};
+
+// status.no_of_player = 0;
+// let status.start = false;
+// let status.game_started = false;
+// let status.players = {};
+
+// let status.turn = false;
+// let status.update = false;
+
+const writeStatus = function() {
+  fs.writeFileSync('./status.json', JSON.stringify(status), 'utf8');
+};
 
 const serveStaticFile = (req, res, data) => {
   const path = `${static_path}${req.url}`;
@@ -18,13 +27,13 @@ const serveStaticFile = (req, res, data) => {
   if (!req.headers['Cookie'] && req.url == '/html/select.html') {
     const cookie = `coco=${new Date().getTime()}`;
     res.setHeader('Set-Cookie', cookie);
-    players[cookie] = { playerName };
-    console.log(players);
+    status.players[cookie] = { playerName };
   }
   const [, extension] = path.match(/.*\.(.*)$/) || [];
   res.setHeader('Content-Length', content.length);
   res.setHeader('Content-type', contentType[extension]);
   res.statusCode = 200;
+  writeStatus();
   res.end(content);
 };
 
@@ -42,33 +51,91 @@ const serveHomePage = (req, res) => {
 };
 
 const waitingHandler = function(req, res) {
-  console.log(no_of_player);
+  console.log('waiting');
+  console.log(status.no_of_player);
 
   let content = 'waiting';
-  if (game_started) {
-    start = true;
+  if (status.game_started) {
+    status.start = true;
   }
 
-  if (no_of_player === 2) {
-    game_started = true;
+  if (status.no_of_player === 2) {
+    status.game_started = true;
     content = 'start';
   }
   res.setHeader('Content-Length', content.length);
   res.setHeader('Content-Type', contentType['txt']);
   res.statusCode = 200;
+  writeStatus();
   res.end(content);
 };
 
 const getShipsPositions = function(req, res, data) {
-  no_of_player++;
-  const cookie = req.headers['set-cookie'];
-  players[cookie].ships = JSON.parse(data);
+  status.no_of_player++;
+  const cookie = req.headers['set-cookie'][0];
+  status.players[cookie].ships = JSON.parse(data);
   res.end();
 };
 
 const serveShips = function(req, res) {
-  const cookie = req.headers['set-cookie'];
-  const content = JSON.stringify(players[cookie].ships);
+  const cookie = req.headers['set-cookie'][0];
+  const content = JSON.stringify(status.players[cookie].ships);
+  writeStatus();
+  res.end(content);
+};
+
+const serveTurn = function(req, res) {
+  const cookie = req.headers['set-cookie'][0];
+  console.log(cookie);
+
+  const content = [];
+  if (!status.turn) {
+    status.turn = cookie;
+    writeStatus();
+    console.log('assigning to', cookie, status.players[cookie]);
+    content.push('yourTurn');
+    // res.end('yourTurn');
+    // return;
+  }
+  for (let playerId in status.update) {
+    if (playerId != cookie) {
+      if (status.update[playerId]) {
+        console.log(
+          'updating to',
+          cookie,
+          status.players[cookie].playerName
+        );
+        content.push(status.update[playerId]);
+        status.update[playerId] = false;
+        // res.end(status.update[playerId]);
+        // return;
+      }
+    }
+  }
+  res.end(content.join('&'));
+};
+
+const serveClicked = function(req, res, data) {
+  status.turn = false;
+  const cookie = req.headers['set-cookie'][0];
+  console.log(status.players[cookie].playerName, 'clicked on', data);
+
+  console.log(status.update);
+
+  let current = false;
+  let content = 'miss';
+  for (let player in status.players) {
+    if (player != cookie) {
+      if (status.players[player].ships.includes(data)) {
+        current = true;
+      }
+    }
+  }
+  if (current) {
+    content = 'hit';
+  }
+  status.update[cookie] = `${data}&${content}`;
+  writeStatus();
   res.end(content);
 };
 
@@ -79,6 +146,8 @@ const findHandler = req => {
   if (req.url == '/wait') return waitingHandler;
   if (req.url == '/json') return getShipsPositions;
   if (req.url == '/getShips') return serveShips;
+  if (req.url == '/turn') return serveTurn;
+  if (req.url == '/clicked') return serveClicked;
   return serveStaticFile;
 };
 const processRequest = (req, res, data) => {

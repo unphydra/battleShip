@@ -5,35 +5,35 @@ const getCellId = function(col, row) {
   return `${col}_${row}`;
 };
 
-const createCell = function(board,innerText,id) {
+const createCell = function(board, innerText, id) {
   const cell = document.createElement('div');
-  if(innerText){
+  if (innerText) {
     cell.innerText = innerText;
   }
   cell.className = 'cell';
-  cell.id = id
+  cell.id = id;
   board.appendChild(cell);
 };
 
 const createBoard = function(player) {
   for (let y = 0; y < row; y++) {
     for (let x = 0; x < col; x++) {
-      const id = getCellId(x,y)
-      createCell(player,false, id);
+      const id = getCellId(x, y);
+      createCell(player, false, id);
     }
   }
 };
 
 const createHeader = function(header) {
-  for(let x = 0;x<=col;x++){
-    createCell(header,x);
+  for (let x = 0; x <= col; x++) {
+    createCell(header, x);
   }
 };
 
 const createSide = function(side) {
-  for(let y = 0;y<row;y++){
+  for (let y = 0; y < row; y++) {
     const innerText = String.fromCharCode(65 + y);
-    createCell(side,innerText)
+    createCell(side, innerText);
   }
 };
 
@@ -42,18 +42,12 @@ const createContainer = function(container) {
   const header = container.parentElement.parentElement.children[0];
   createHeader(header);
   const side = container.parentElement.children[0];
-  createSide(side)
-
+  createSide(side);
 };
 
 const displayGrid = function() {
   const board1 = document.getElementById('board1');
-  board1.addEventListener('click',handleClick)
   const board2 = document.getElementById('board2');
-  createContainer(board1)
-  board2 && createContainer(board2)
-
-
-  // board2 && board2.addEventListener('click',handleClick)
-  // board2 && createBoard(board2);
+  createContainer(board1);
+  board2 && createContainer(board2);
 };

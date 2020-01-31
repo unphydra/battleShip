@@ -14,17 +14,16 @@ body {
   width: 594px;
   height: 594px;
   border: 1px solid black;
- 
 }
 
-.conHeader{
+.conHeader {
   width: 594px;
   height: 54px;
   display: flex;
   flex-wrap: wrap;
 }
 
-.conFooter{
+.conFooter {
   display: flex;
   width: 594px;
   height: 540px;
@@ -32,12 +31,12 @@ body {
   flex-wrap: wrap;
 }
 
-.side{
+.side {
   width: 54px;
   height: 540px;
 }
 
-.board{
+.board {
   width: 540px;
   height: 540px;
   display: flex;
@@ -54,4 +53,12 @@ body {
 
 .red {
   background-color: red;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.green {
+  background-color: green;
 }
